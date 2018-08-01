@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GetScoresFromFiles.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="repCible" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\Temp\FScores</Value>
+    </Setting>
+    <Setting Name="fichierSauvegarde" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\scorecards.xml</Value>
+    </Setting>
+    <Setting Name="dateFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dd/MM/yy HH:mm</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

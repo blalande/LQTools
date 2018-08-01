@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GetFilesFromLQX.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="fichierCible" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\LQM_COM_FILE.TXT</Value>
+    </Setting>
+    <Setting Name="repDestination" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\LQBrut</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

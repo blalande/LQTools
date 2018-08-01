@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="SaisieFicheScore.LigneScoreCtl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="30" Width="424">
+    <Grid Margin="0,0,0,0">
+        <ComboBox x:Name="cmbEquipe" HorizontalAlignment="Left" Margin="6,3,0,0" VerticalAlignment="Top" Width="49" IsEditable="True"/>
+        <ComboBox x:Name="cmbPlayer" HorizontalAlignment="Left" Margin="66,3,0,0" VerticalAlignment="Top" Width="120" IsEditable="True"/>
+        <TextBox x:Name="txtFront" HorizontalAlignment="Left" Height="23" Margin="196,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" MaxLength="2" GotFocus="txtFront_GotFocus"/>
+        <TextBox x:Name="txtBack" HorizontalAlignment="Left" Height="23" Margin="237,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" MaxLength="2" GotFocus="txtBack_GotFocus"/>
+        <TextBox x:Name="txtGun" HorizontalAlignment="Left" Height="23" Margin="277,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" MaxLength="2" GotFocus="txtGun_GotFocus"/>
+        <TextBox x:Name="txtShoulder" HorizontalAlignment="Left" Height="23" Margin="317,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" MaxLength="2" GotFocus="txtShoulder_GotFocus"/>
+        <TextBox x:Name="txtScore" HorizontalAlignment="Left" Height="23" Margin="359,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"/>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LQDMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Centre">
+          <Key>
+            <PropertyRef Name="CentreId" />
+          </Key>
+          <Property Name="CentreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CleExterne" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DroitAcces">
+          <Key>
+            <PropertyRef Name="UtilisateursLogin" />
+            <PropertyRef Name="EvenementEvenementId" />
+            <PropertyRef Name="EvenementCentreCentreId" />
+          </Key>
+          <Property Name="UtilisateursLogin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EvenementEvenementId" Type="int" Nullable="false" />
+          <Property Name="EvenementCentreCentreId" Type="int" Nullable="false" />
+          <Property Name="Niveau" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evenement">
+          <Key>
+            <PropertyRef Name="EvenementId" />
+            <PropertyRef Name="CentreCentreId" />
+          </Key>
+          <Property Name="EvenementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CentreCentreId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="TypeAcces" Type="int" Nullable="false" />
+          <Property Name="TypeEvenement" Type="int" Nullable="false" />
+          <Property Name="ScoringSysteme_ScoringSystemeId" Type="int" />
+        </EntityType>
+        <EntityType Name="LigneScore">
+          <Key>
+            <PropertyRef Name="pseudoCible" />
+            <PropertyRef Name="typeLigneScore" />
+            <PropertyRef Name="ScoreCard_dt" />
+            <PropertyRef Name="ScoreCard_pseudo" />
+            <PropertyRef Name="ScoreCardEvenementEvenementId" />
+            <PropertyRef Name="ScoreCardEvenementCentreCentreId" />
+          </Key>
+          <Property Name="pseudoCible" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="typeLigneScore" Type="int" Nullable="false" />
+          <Property Name="front" Type="int" Nullable="false" />
+          <Property Name="back" Type="int" Nullable="false" />
+          <Property Name="gun" Type="int" Nullable="false" />
+          <Property Name="shoulder" Type="int" Nullable="false" />
+          <Property Name="equipe" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ScoreCard_dt" Type="datetime" Nullable="false" />
+          <Property Name="ScoreCard_pseudo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ScoreCardEvenementEvenementId" Type="int" Nullable="false" />
+          <Property Name="ScoreCardEvenementCentreCentreId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScoreCard">
+          <Key>
+            <PropertyRef Name="dt" />
+            <PropertyRef Name="pseudo" />
+            <PropertyRef Name="EvenementEvenementId" />
+            <PropertyRef Name="EvenementCentreCentreId" />
+          </Key>
+          <Property Name="dt" Type="datetime" Nullable="false" />
+          <Property Name="pseudo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="equipe" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="tirs" Type="int" Nullable="false" />
+          <Property Name="ratio" Type="int" Nullable="false" />
+          <Property Name="rank" Type="int" Nullable="false" />
+          <Property Name="packid" Type="int" Nullable="false" />
+          <Property Name="EvenementEvenementId" Type="int" Nullable="false" />
+          <Property Name="EvenementCentreCentreId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScoringSysteme">
+          <Key>
+            <PropertyRef Name="ScoringSystemeId" />
+          </Key>
+          <Property Name="ScoringSystemeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ratioMax" Type="int" Nullable="false" />
+          <Property Name="ratioPts" Type="int" Nullable="false" />
+          <Property Name="frontPlus" Type="int" Nullable="false" />
+          <Property Name="backPlus" Type="int" Nullable="false" />
+          <Property Name="gunPlus" Type="int" Nullable="false" />
+          <Property Name="shoulderPlus" Type="int" Nullable="false" />
+          <Property Name="frontMoins" Type="int" Nullable="false" />
+          <Property Name="backMoins" Type="int" Nullable="false" />
+          <Property Name="gunMoins" Type="int" Nullable="false" />
+          <Property Name="shoulderMoins" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilisateurs">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NomAffichable" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Niveau" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CentreEvenement">
+          <End Role="Centre" Type="Self.Centre" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Centre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="CentreCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EvenementDroitAcces">
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="1" />
+          <End Role="DroitAcces" Type="Self.DroitAcces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evenement">
+              <PropertyRef Name="EvenementId" />
+              <PropertyRef Name="CentreCentreId" />
+            </Principal>
+            <Dependent Role="DroitAcces">
+              <PropertyRef Name="EvenementEvenementId" />
+              <PropertyRef Name="EvenementCentreCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EvenementScoreCard">
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="1" />
+          <End Role="ScoreCard" Type="Self.ScoreCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evenement">
+              <PropertyRef Name="EvenementId" />
+              <PropertyRef Name="CentreCentreId" />
+            </Principal>
+            <Dependent Role="ScoreCard">
+              <PropertyRef Name="EvenementEvenementId" />
+              <PropertyRef Name="EvenementCentreCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EvenementScoringSysteme">
+          <End Role="ScoringSysteme" Type="Self.ScoringSysteme" Multiplicity="0..1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScoringSysteme">
+              <PropertyRef Name="ScoringSystemeId" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="ScoringSysteme_ScoringSystemeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScoreCardLigneScore">
+          <End Role="ScoreCard" Type="Self.ScoreCard" Multiplicity="1" />
+          <End Role="LigneScore" Type="Self.LigneScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScoreCard">
+              <PropertyRef Name="dt" />
+              <PropertyRef Name="pseudo" />
+              <PropertyRef Name="EvenementEvenementId" />
+              <PropertyRef Name="EvenementCentreCentreId" />
+            </Principal>
+            <Dependent Role="LigneScore">
+              <PropertyRef Name="ScoreCard_dt" />
+              <PropertyRef Name="ScoreCard_pseudo" />
+              <PropertyRef Name="ScoreCardEvenementEvenementId" />
+              <PropertyRef Name="ScoreCardEvenementCentreCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UtilisateursDroitAcces">
+          <End Role="Utilisateurs" Type="Self.Utilisateurs" Multiplicity="1" />
+          <End Role="DroitAcces" Type="Self.DroitAcces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateurs">
+              <PropertyRef Name="Login" />
+            </Principal>
+            <Dependent Role="DroitAcces">
+              <PropertyRef Name="UtilisateursLogin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LQDMModelStoreContainer">
+          <EntitySet Name="Centre" EntityType="Self.Centre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DroitAcces" EntityType="Self.DroitAcces" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evenement" EntityType="Self.Evenement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LigneScore" EntityType="Self.LigneScore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScoreCard" EntityType="Self.ScoreCard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScoringSysteme" EntityType="Self.ScoringSysteme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateurs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CentreEvenement" Association="Self.FK_CentreEvenement">
+            <End Role="Centre" EntitySet="Centre" />
+            <End Role="Evenement" EntitySet="Evenement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EvenementDroitAcces" Association="Self.FK_EvenementDroitAcces">
+            <End Role="Evenement" EntitySet="Evenement" />
+            <End Role="DroitAcces" EntitySet="DroitAcces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EvenementScoreCard" Association="Self.FK_EvenementScoreCard">
+            <End Role="Evenement" EntitySet="Evenement" />
+            <End Role="ScoreCard" EntitySet="ScoreCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EvenementScoringSysteme" Association="Self.FK_EvenementScoringSysteme">
+            <End Role="ScoringSysteme" EntitySet="ScoringSysteme" />
+            <End Role="Evenement" EntitySet="Evenement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScoreCardLigneScore" Association="Self.FK_ScoreCardLigneScore">
+            <End Role="ScoreCard" EntitySet="ScoreCard" />
+            <End Role="LigneScore" EntitySet="LigneScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UtilisateursDroitAcces" Association="Self.FK_UtilisateursDroitAcces">
+            <End Role="Utilisateurs" EntitySet="Utilisateurs" />
+            <End Role="DroitAcces" EntitySet="DroitAcces" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LQDMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Centre">
+          <Key>
+            <PropertyRef Name="CentreId" />
+          </Key>
+          <Property Name="CentreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Evenement" Relationship="Self.FK_CentreEvenement" FromRole="Centre" ToRole="Evenement" />
+          <Property Name="CleExterne" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DroitAcces">
+          <Key>
+            <PropertyRef Name="UtilisateursLogin" />
+            <PropertyRef Name="EvenementEvenementId" />
+            <PropertyRef Name="EvenementCentreCentreId" />
+          </Key>
+          <Property Name="UtilisateursLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EvenementEvenementId" Type="Int32" Nullable="false" />
+          <Property Name="EvenementCentreCentreId" Type="Int32" Nullable="false" />
+          <Property Name="Niveau" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Evenement" Relationship="Self.FK_EvenementDroitAcces" FromRole="DroitAcces" ToRole="Evenement" />
+          <NavigationProperty Name="Utilisateurs" Relationship="Self.FK_UtilisateursDroitAcces" FromRole="DroitAcces" ToRole="Utilisateurs" />
+        </EntityType>
+        <EntityType Name="Evenement">
+          <Key>
+            <PropertyRef Name="EvenementId" />
+            <PropertyRef Name="CentreCentreId" />
+          </Key>
+          <Property Name="EvenementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CentreCentreId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TypeAcces" Type="Int32" Nullable="false" />
+          <Property Name="TypeEvenement" Type="LQDMModel.typeEvenement" Nullable="false" />
+          <Property Name="ScoringSysteme_ScoringSystemeId" Type="Int32" />
+          <NavigationProperty Name="Centre" Relationship="Self.FK_CentreEvenement" FromRole="Evenement" ToRole="Centre" />
+          <NavigationProperty Name="DroitAcces" Relationship="Self.FK_EvenementDroitAcces" FromRole="Evenement" ToRole="DroitAcces" />
+          <NavigationProperty Name="ScoreCard" Relationship="Self.FK_EvenementScoreCard" FromRole="Evenement" ToRole="ScoreCard" />
+          <NavigationProperty Name="ScoringSysteme" Relationship="Self.FK_EvenementScoringSysteme" FromRole="Evenement" ToRole="ScoringSysteme" />
+        </EntityType>
+        <EntityType Name="LigneScore">
+          <Key>
+            <PropertyRef Name="pseudoCible" />
+            <PropertyRef Name="typeLigneScore" />
+            <PropertyRef Name="ScoreCard_dt" />
+            <PropertyRef Name="ScoreCard_pseudo" />
+            <PropertyRef Name="ScoreCardEvenementEvenementId" />
+            <PropertyRef Name="ScoreCardEvenementCentreCentreId" />
+          </Key>
+          <Property Name="pseudoCible" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typeLigneScore" Type="LQDMModel.typeLigneScore" Nullable="false" />
+          <Property Name="front" Type="Int32" Nullable="false" />
+          <Property Name="back" Type="Int32" Nullable="false" />
+          <Property Name="gun" Type="Int32" Nullable="false" />
+          <Property Name="shoulder" Type="Int32" Nullable="false" />
+          <Property Name="equipe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ScoreCard_dt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ScoreCard_pseudo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ScoreCardEvenementEvenementId" Type="Int32" Nullable="false" />
+          <Property Name="ScoreCardEvenementCentreCentreId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ScoreCard" Relationship="Self.FK_ScoreCardLigneScore" FromRole="LigneScore" ToRole="ScoreCard" />
+        </EntityType>
+        <EntityType Name="ScoreCard">
+          <Key>
+            <PropertyRef Name="dt" />
+            <PropertyRef Name="pseudo" />
+            <PropertyRef Name="EvenementEvenementId" />
+            <PropertyRef Name="EvenementCentreCentreId" />
+          </Key>
+          <Property Name="dt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pseudo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="equipe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tirs" Type="Int32" Nullable="false" />
+          <Property Name="ratio" Type="Int32" Nullable="false" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="packid" Type="Int32" Nullable="false" />
+          <Property Name="EvenementEvenementId" Type="Int32" Nullable="false" />
+          <Property Name="EvenementCentreCentreId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Evenement" Relationship="Self.FK_EvenementScoreCard" FromRole="ScoreCard" ToRole="Evenement" />
+          <NavigationProperty Name="LigneScore" Relationship="Self.FK_ScoreCardLigneScore" FromRole="ScoreCard" ToRole="LigneScore" />
+        </EntityType>
+        <EntityType Name="ScoringSysteme">
+          <Key>
+            <PropertyRef Name="ScoringSystemeId" />
+          </Key>
+          <Property Name="ScoringSystemeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ratioMax" Type="Int32" Nullable="false" />
+          <Property Name="ratioPts" Type="Int32" Nullable="false" />
+          <Property Name="frontPlus" Type="Int32" Nullable="false" />
+          <Property Name="backPlus" Type="Int32" Nullable="false" />
+          <Property Name="gunPlus" Type="Int32" Nullable="false" />
+          <Property Name="shoulderPlus" Type="Int32" Nullable="false" />
+          <Property Name="frontMoins" Type="Int32" Nullable="false" />
+          <Property Name="backMoins" Type="Int32" Nullable="false" />
+          <Property Name="gunMoins" Type="Int32" Nullable="false" />
+          <Property Name="shoulderMoins" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Evenement" Relationship="Self.FK_EvenementScoringSysteme" FromRole="ScoringSysteme" ToRole="Evenement" />
+        </EntityType>
+        <EntityType Name="Utilisateurs">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NomAffichable" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Niveau" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DroitAcces" Relationship="Self.FK_UtilisateursDroitAcces" FromRole="Utilisateurs" ToRole="DroitAcces" />
+        </EntityType>
+        <Association Name="FK_CentreEvenement">
+          <End Role="Centre" Type="Self.Centre" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Centre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="CentreCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EvenementDroitAcces">
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="1" />
+          <End Role="DroitAcces" Type="Self.DroitAcces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evenement">
+              <PropertyRef Name="EvenementId" />
+              <PropertyRef Name="CentreCentreId" />
+            </Principal>
+            <Dependent Role="DroitAcces">
+              <PropertyRef Name="EvenementEvenementId" />
+              <PropertyRef Name="EvenementCentreCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UtilisateursDroitAcces">
+          <End Role="Utilisateurs" Type="Self.Utilisateurs" Multiplicity="1" />
+          <End Role="DroitAcces" Type="Self.DroitAcces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateurs">
+              <PropertyRef Name="Login" />
+            </Principal>
+            <Dependent Role="DroitAcces">
+              <PropertyRef Name="UtilisateursLogin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EvenementScoreCard">
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="1" />
+          <End Role="ScoreCard" Type="Self.ScoreCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evenement">
+              <PropertyRef Name="EvenementId" />
+              <PropertyRef Name="CentreCentreId" />
+            </Principal>
+            <Dependent Role="ScoreCard">
+              <PropertyRef Name="EvenementEvenementId" />
+              <PropertyRef Name="EvenementCentreCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EvenementScoringSysteme">
+          <End Role="ScoringSysteme" Type="Self.ScoringSysteme" Multiplicity="0..1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScoringSysteme">
+              <PropertyRef Name="ScoringSystemeId" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="ScoringSysteme_ScoringSystemeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScoreCardLigneScore">
+          <End Role="ScoreCard" Type="Self.ScoreCard" Multiplicity="1" />
+          <End Role="LigneScore" Type="Self.LigneScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScoreCard">
+              <PropertyRef Name="dt" />
+              <PropertyRef Name="pseudo" />
+              <PropertyRef Name="EvenementEvenementId" />
+              <PropertyRef Name="EvenementCentreCentreId" />
+            </Principal>
+            <Dependent Role="LigneScore">
+              <PropertyRef Name="ScoreCard_dt" />
+              <PropertyRef Name="ScoreCard_pseudo" />
+              <PropertyRef Name="ScoreCardEvenementEvenementId" />
+              <PropertyRef Name="ScoreCardEvenementCentreCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LQDMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Centre" EntityType="Self.Centre" />
+          <EntitySet Name="DroitAcces" EntityType="Self.DroitAcces" />
+          <EntitySet Name="Evenement" EntityType="Self.Evenement" />
+          <EntitySet Name="LigneScore" EntityType="Self.LigneScore" />
+          <EntitySet Name="ScoreCard" EntityType="Self.ScoreCard" />
+          <EntitySet Name="ScoringSysteme" EntityType="Self.ScoringSysteme" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateurs" />
+          <AssociationSet Name="FK_CentreEvenement" Association="Self.FK_CentreEvenement">
+            <End Role="Centre" EntitySet="Centre" />
+            <End Role="Evenement" EntitySet="Evenement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EvenementDroitAcces" Association="Self.FK_EvenementDroitAcces">
+            <End Role="Evenement" EntitySet="Evenement" />
+            <End Role="DroitAcces" EntitySet="DroitAcces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UtilisateursDroitAcces" Association="Self.FK_UtilisateursDroitAcces">
+            <End Role="Utilisateurs" EntitySet="Utilisateurs" />
+            <End Role="DroitAcces" EntitySet="DroitAcces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EvenementScoreCard" Association="Self.FK_EvenementScoreCard">
+            <End Role="Evenement" EntitySet="Evenement" />
+            <End Role="ScoreCard" EntitySet="ScoreCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EvenementScoringSysteme" Association="Self.FK_EvenementScoringSysteme">
+            <End Role="ScoringSysteme" EntitySet="ScoringSysteme" />
+            <End Role="Evenement" EntitySet="Evenement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScoreCardLigneScore" Association="Self.FK_ScoreCardLigneScore">
+            <End Role="ScoreCard" EntitySet="ScoreCard" />
+            <End Role="LigneScore" EntitySet="LigneScore" />
+          </AssociationSet>
+        </EntityContainer>
+        <EnumType Name="typeLigneScore">
+          <Member Name="UP" />
+          <Member Name="DOWN" />
+        </EnumType>
+        <EnumType Name="typeEvenement">
+          <Member Name="Standard" />
+          <Member Name="Entrainement" />
+          <Member Name="Tournoi" />
+        </EnumType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LQDMModelStoreContainer" CdmEntityContainer="LQDMEntities">
+          <EntitySetMapping Name="Centre">
+            <EntityTypeMapping TypeName="LQDMModel.Centre">
+              <MappingFragment StoreEntitySet="Centre">
+                <ScalarProperty Name="CleExterne" ColumnName="CleExterne" />
+                <ScalarProperty Name="CentreId" ColumnName="CentreId" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DroitAcces">
+            <EntityTypeMapping TypeName="LQDMModel.DroitAcces">
+              <MappingFragment StoreEntitySet="DroitAcces">
+                <ScalarProperty Name="UtilisateursLogin" ColumnName="UtilisateursLogin" />
+                <ScalarProperty Name="EvenementEvenementId" ColumnName="EvenementEvenementId" />
+                <ScalarProperty Name="EvenementCentreCentreId" ColumnName="EvenementCentreCentreId" />
+                <ScalarProperty Name="Niveau" ColumnName="Niveau" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evenement">
+            <EntityTypeMapping TypeName="LQDMModel.Evenement">
+              <MappingFragment StoreEntitySet="Evenement">
+                <ScalarProperty Name="EvenementId" ColumnName="EvenementId" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="CentreCentreId" ColumnName="CentreCentreId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TypeAcces" ColumnName="TypeAcces" />
+                <ScalarProperty Name="TypeEvenement" ColumnName="TypeEvenement" />
+                <ScalarProperty Name="ScoringSysteme_ScoringSystemeId" ColumnName="ScoringSysteme_ScoringSystemeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LigneScore">
+            <EntityTypeMapping TypeName="LQDMModel.LigneScore">
+              <MappingFragment StoreEntitySet="LigneScore">
+                <ScalarProperty Name="pseudoCible" ColumnName="pseudoCible" />
+                <ScalarProperty Name="typeLigneScore" ColumnName="typeLigneScore" />
+                <ScalarProperty Name="front" ColumnName="front" />
+                <ScalarProperty Name="back" ColumnName="back" />
+                <ScalarProperty Name="gun" ColumnName="gun" />
+                <ScalarProperty Name="shoulder" ColumnName="shoulder" />
+                <ScalarProperty Name="equipe" ColumnName="equipe" />
+                <ScalarProperty Name="ScoreCard_dt" ColumnName="ScoreCard_dt" />
+                <ScalarProperty Name="ScoreCard_pseudo" ColumnName="ScoreCard_pseudo" />
+                <ScalarProperty Name="ScoreCardEvenementEvenementId" ColumnName="ScoreCardEvenementEvenementId" />
+                <ScalarProperty Name="ScoreCardEvenementCentreCentreId" ColumnName="ScoreCardEvenementCentreCentreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScoreCard">
+            <EntityTypeMapping TypeName="LQDMModel.ScoreCard">
+              <MappingFragment StoreEntitySet="ScoreCard">
+                <ScalarProperty Name="dt" ColumnName="dt" />
+                <ScalarProperty Name="pseudo" ColumnName="pseudo" />
+                <ScalarProperty Name="equipe" ColumnName="equipe" />
+                <ScalarProperty Name="tirs" ColumnName="tirs" />
+                <ScalarProperty Name="ratio" ColumnName="ratio" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="packid" ColumnName="packid" />
+                <ScalarProperty Name="EvenementEvenementId" ColumnName="EvenementEvenementId" />
+                <ScalarProperty Name="EvenementCentreCentreId" ColumnName="EvenementCentreCentreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScoringSysteme">
+            <EntityTypeMapping TypeName="LQDMModel.ScoringSysteme">
+              <MappingFragment StoreEntitySet="ScoringSysteme">
+                <ScalarProperty Name="ScoringSystemeId" ColumnName="ScoringSystemeId" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="ratioMax" ColumnName="ratioMax" />
+                <ScalarProperty Name="ratioPts" ColumnName="ratioPts" />
+                <ScalarProperty Name="frontPlus" ColumnName="frontPlus" />
+                <ScalarProperty Name="backPlus" ColumnName="backPlus" />
+                <ScalarProperty Name="gunPlus" ColumnName="gunPlus" />
+                <ScalarProperty Name="shoulderPlus" ColumnName="shoulderPlus" />
+                <ScalarProperty Name="frontMoins" ColumnName="frontMoins" />
+                <ScalarProperty Name="backMoins" ColumnName="backMoins" />
+                <ScalarProperty Name="gunMoins" ColumnName="gunMoins" />
+                <ScalarProperty Name="shoulderMoins" ColumnName="shoulderMoins" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
+            <EntityTypeMapping TypeName="LQDMModel.Utilisateurs">
+              <MappingFragment StoreEntitySet="Utilisateurs">
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="NomAffichable" ColumnName="NomAffichable" />
+                <ScalarProperty Name="Niveau" ColumnName="Niveau" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LQPackStat.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FichierLog" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\messagesLQPS.log</Value>
+    </Setting>
+    <Setting Name="FichierSauvegarde" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\scorecards.xml</Value>
+    </Setting>
+    <Setting Name="RepertoireExport" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp</Value>
+    </Setting>
+    <Setting Name="DateFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dd/MM/yy HH:mm</Value>
+    </Setting>
+    <Setting Name="JoursRetention" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="FichierSource" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\fscore.txt</Value>
+    </Setting>
+    <Setting Name="APIUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:57593</Value>
+    </Setting>
+    <Setting Name="CentreCle" Type="System.Guid" Scope="User">
+      <Value Profile="(Default)">fe275a41-d34f-4106-b715-70afeca2403a</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
