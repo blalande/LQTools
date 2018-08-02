@@ -94,15 +94,20 @@ namespace LQPackStat
       Properties.Settings pApp = new Properties.Settings();
       entr = new Entrainement();
       LoadData();
-      // on va nettoyer un peu le fichier de fiches de score pour garder de la place
-      DateTime dtLimite = DateTime.Now.AddDays(-int.Parse(pApp.JoursRetention));
-      var query = from q in entr.lstScores
-                  where q.jourTravail < dtLimite
-                  select q;
-      // dans query on a les fiches a supprimer
-      entr.lstScores.RemoveRange(0, query.Count());
-      // on sauvegarde tout
-      SaveData();
+      int joursRet = 0;
+      
+      if (int.TryParse(pApp.JoursRetention, out joursRet) && joursRet != 0)
+      {
+        // on va nettoyer un peu le fichier de fiches de score pour garder de la place
+        DateTime dtLimite = DateTime.Now.AddDays(-joursRet);
+        var query = from q in entr.lstScores
+                    where q.jourTravail < dtLimite
+                    select q;
+        // dans query on a les fiches a supprimer
+        entr.lstScores.RemoveRange(0, query.Count());
+        // on sauvegarde tout
+        SaveData();
+      }
       nbGamesBack = nbHeures = nbJours = 0;
       visuSelected = typeVisu.TOUT;
       menuTout.IsChecked = true;
